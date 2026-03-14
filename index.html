@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light only" />
+    <title>Frenzy Faire — Handcrafted & Vintage Goods</title>
+    <meta name="description" content="An eclectic collection of handcrafted ceramics, vintage home goods, jewelry, and clothing in North Beach, San Francisco. Open Thursday through Sunday, 12 to 6pm." />
+    <meta property="og:site_name" content="Frenzy Faire" />
+    <meta property="og:title" content="Frenzy Faire — Handcrafted & Vintage Goods" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="An eclectic collection of handcrafted ceramics, vintage home goods, jewelry, and clothing in North Beach, San Francisco." />
+    <meta property="og:url" content="https://frenzyfaire.com" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <style>
+      html { scroll-behavior: smooth; }
+      body { background: #FFFFFF; margin: 0; }
+      #root { opacity: 0; transition: opacity .15s ease-in; }
+      #root.ready { opacity: 1; }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-61QSHE4P4H"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-61QSHE4P4H');
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      new MutationObserver(function(m, o) {
+        if (document.getElementById("root").children.length) {
+          document.getElementById("root").classList.add("ready");
+          o.disconnect();
+        }
+      }).observe(document.getElementById("root"), { childList: true });
+    </script>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
