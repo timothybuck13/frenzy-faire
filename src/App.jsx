@@ -109,14 +109,24 @@ function LazyImage({ src, alt, className, style }) {
   )
 }
 
+/* ───────── photos used above the gallery (don't repeat) ───────── */
+const featuredSrcs = new Set([
+  '/photos/storefront.jpg',
+  '/photos/flower-mug.jpg',
+  '/photos/interior-1.jpg',
+  '/photos/vintage-clothing-and-ceramic-mug.jpg',
+])
+
 /* ───────── gallery component (masonry) ───────── */
 function Gallery() {
   const COLS = 3
   const GAP = 6
 
+  const galleryPhotos = photos.filter(p => !featuredSrcs.has(p.src))
+
   // Distribute photos into columns, balancing total height
   const columns = Array.from({ length: COLS }, () => ({ photos: [], height: 0 }))
-  photos.forEach((p) => {
+  galleryPhotos.forEach((p) => {
     // Find shortest column
     const shortest = columns.reduce((min, col, i) =>
       col.height < columns[min].height ? i : min, 0)
