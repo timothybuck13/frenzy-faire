@@ -180,30 +180,15 @@ export default function App() {
           }}
         />
         <div className="relative text-center px-6">
-          <h1
-            className="text-white font-normal tracking-wider"
+          <img
+            src="/logo.png"
+            alt="Frenzy Faire — Handcrafted & Vintage Goods"
             style={{
-              fontFamily: "'Georgia', serif",
-              fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-              lineHeight: 1.15,
-              letterSpacing: '0.08em',
-              textShadow: '0 2px 20px rgba(0,0,0,0.3)',
+              maxWidth: 'clamp(280px, 50vw, 500px)',
+              height: 'auto',
+              filter: 'invert(1)',
             }}
-          >
-            Frenzy Faire
-          </h1>
-          <p
-            className="text-white/85 mt-4"
-            style={{
-              fontFamily: "'Georgia', serif",
-              fontSize: 'clamp(0.875rem, 2vw, 1.25rem)',
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              textShadow: '0 1px 10px rgba(0,0,0,0.3)',
-            }}
-          >
-            Handcrafted & Vintage Goods
-          </p>
+          />
           <p
             className="text-white/70 mt-3"
             style={{
