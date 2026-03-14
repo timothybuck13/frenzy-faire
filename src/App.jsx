@@ -4,15 +4,12 @@ import { useState, useEffect, useRef } from 'react'
 const photos = [
   // Row 1: Hero pair — storefront + owners in doorway
   { src: '/photos/storefront.jpg', alt: 'Frenzy Faire storefront on Union Street', w: 2000, h: 1330 },
-  { src: '/photos/opening-party-owners.jpg', alt: 'Alyssa and Timothy in the Frenzy Faire doorway', w: 1325, h: 2000 },
-
   // Row 2: Interior atmosphere
   { src: '/photos/interior-1.jpg', alt: 'Vintage clothing rack bathed in afternoon light', w: 1331, h: 2000 },
   { src: '/photos/interior-2.jpg', alt: 'Handcrafted ceramic vase with dried flowers on carved table', w: 1125, h: 2000 },
   { src: '/photos/doorway.jpg', alt: 'View through the Frenzy Faire door into the store', w: 1325, h: 2000 },
 
-  // Row 3: Ceramics shelf — wide panoramic
-  { src: '/photos/ceramic-shelf.jpg', alt: 'Shelf of handcrafted ceramic pieces', w: 2000, h: 530 },
+  // Row 3: Ceramics detail
 
   // Row 4: Ceramics detail
   { src: '/photos/ceramics.jpg', alt: 'Handpainted ceramic mugs and candle holders', w: 1500, h: 2000 },
@@ -26,17 +23,14 @@ const photos = [
 
   // Row 6: Vases and platters
   { src: '/photos/large-green-ceramic-vase.jpg', alt: 'Large green ceramic vase', w: 1500, h: 2000 },
-  { src: '/photos/ahn-lee-vase.jpg', alt: 'Ahn Lee vase', w: 2000, h: 2000 },
   { src: '/photos/ceramic-flower-vase.jpg', alt: 'Handcrafted ceramic flower vase', w: 1500, h: 2000 },
 
-  // Row 7: Large platter + handcrafted candle holder (landscape)
+  // Row 7: Large platter
   { src: '/photos/large-ceramic-platter.jpg', alt: 'Large handcrafted ceramic platter', w: 1500, h: 2000 },
-  { src: '/photos/handcrafted-candle-holder.jpg', alt: 'Handcrafted candle holder detail', w: 2000, h: 1500 },
 
   // Row 8: Moroccan + Berber collection
   { src: '/photos/moroccan-collection.jpg', alt: 'Moroccan collection', w: 1500, h: 2000 },
   { src: '/photos/vintage-berber-pottery.jpg', alt: 'Vintage Berber pottery', w: 1500, h: 2000 },
-  { src: '/photos/berber-textiles.jpg', alt: 'Berber textiles', w: 1500, h: 2000 },
 
   // Row 9: Berber necklaces + mid century prints (landscape pair)
   { src: '/photos/berber-necklaces.jpg', alt: 'Berber necklaces', w: 2000, h: 1331 },
@@ -49,24 +43,22 @@ const photos = [
   // Row 11: Clothing details (landscape strip)
   { src: '/photos/vintage-clothing-details-1.jpg', alt: 'Vintage clothing detail', w: 2000, h: 1331 },
   { src: '/photos/vintage-clothing-details-2.jpg', alt: 'Vintage clothing detail', w: 2000, h: 1331 },
-  { src: '/photos/vintage-clothing-details-3.jpg', alt: 'Vintage clothing detail', w: 2000, h: 1331 },
-
   // Row 12: More clothing details
   { src: '/photos/vintage-clothing-details-4.jpg', alt: 'Vintage clothing detail', w: 2000, h: 1331 },
   { src: '/photos/vintage-clothing-details-5.jpg', alt: 'Vintage clothing detail', w: 1331, h: 2000 },
   { src: '/photos/vintage-clothing-details-6.jpg', alt: 'Vintage clothing detail', w: 2000, h: 1331 },
 
-  // Row 13: Textile details + Alyssa
+  // Vintage textile details
   { src: '/photos/vintage-textile-details.jpg', alt: 'Vintage textile details', w: 2000, h: 1331 },
-  { src: '/photos/alyssa.jpg', alt: 'Alyssa Guerrero in the store', w: 1500, h: 2000 },
+]
 
-  // Row 14: Opening party
+/* ───────── opening party photos (separate section) ───────── */
+const openingPartyPhotos = [
   { src: '/photos/storefront-opening-party.jpg', alt: 'Storefront during opening party', w: 2000, h: 1330 },
   { src: '/photos/opening-party.jpg', alt: 'Opening party', w: 2000, h: 1325 },
-
-  // Row 15: Party moments
   { src: '/photos/opening-party-ahn.jpg', alt: 'Ahn at the opening party', w: 1332, h: 2000 },
   { src: '/photos/opening-party-hugs.jpg', alt: 'Opening party hugs', w: 2000, h: 1330 },
+  { src: '/photos/opening-party-owners.jpg', alt: 'Alyssa and Timothy in the Frenzy Faire doorway', w: 1325, h: 2000 },
   { src: '/photos/owners.jpg', alt: 'The owners', w: 2000, h: 1325 },
 ]
 
@@ -118,20 +110,16 @@ const featuredSrcs = new Set([
 ])
 
 /* ───────── gallery component (masonry) ───────── */
-function Gallery() {
+function Gallery({ photoList }) {
   const COLS = 3
   const GAP = 6
 
-  const galleryPhotos = photos.filter(p => !featuredSrcs.has(p.src))
-
-  // Distribute photos into columns, balancing total height
   const columns = Array.from({ length: COLS }, () => ({ photos: [], height: 0 }))
-  galleryPhotos.forEach((p) => {
-    // Find shortest column
+  photoList.forEach((p) => {
     const shortest = columns.reduce((min, col, i) =>
       col.height < columns[min].height ? i : min, 0)
     columns[shortest].photos.push(p)
-    columns[shortest].height += p.h / p.w // normalized height
+    columns[shortest].height += p.h / p.w
   })
 
   return (
@@ -280,18 +268,23 @@ export default function App() {
         </div>
       </section>
 
-      {/* Instagram CTA */}
-      <section className="py-20 md:py-28">
+      {/* Instagram button */}
+      <section className="pb-16 md:pb-20">
         <div className="max-w-2xl mx-auto px-6 md:px-8 text-center">
           <a
             href="https://www.instagram.com/frenzyfaire/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 no-underline group"
-            style={{ textDecoration: 'none' }}
+            className="inline-flex items-center justify-center gap-3 px-6 py-3 border-2 border-black text-black no-underline transition-transform hover:scale-[1.025]"
+            style={{
+              fontFamily: "'Georgia', serif",
+              letterSpacing: '0.05em',
+              fontSize: '0.875em',
+              textDecoration: 'none',
+            }}
           >
             <svg
-              className="w-7 h-7 transition-transform group-hover:scale-110"
+              className="w-5 h-5"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -303,16 +296,7 @@ export default function App() {
               <circle cx="12" cy="12" r="5" />
               <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
             </svg>
-            <span
-              style={{
-                fontFamily: "'Georgia', serif",
-                fontSize: '1.5em',
-                letterSpacing: '0.03em',
-                color: '#000000',
-              }}
-            >
-              Follow along @frenzyfaire
-            </span>
+            Follow @frenzyfaire
           </a>
         </div>
       </section>
@@ -320,7 +304,56 @@ export default function App() {
       {/* Photo Gallery */}
       <section className="pb-20 md:pb-28">
         <div className="gallery-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
-          <Gallery />
+          <Gallery photoList={photos.filter(p => !featuredSrcs.has(p.src))} />
+        </div>
+      </section>
+
+      {/* Mailing List CTA */}
+      <section className="py-20 md:py-28 border-t border-neutral-200">
+        <div className="max-w-2xl mx-auto px-6 md:px-8 text-center">
+          <p
+            style={{
+              fontFamily: "'Georgia', serif",
+              fontSize: '1.25em',
+              letterSpacing: '0.03em',
+              marginBottom: '1.5rem',
+            }}
+          >
+            Stay in the loop
+          </p>
+          <a
+            href="https://squareup.com/outreach/rjqyGM/subscribe"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-6 py-3 border-2 border-black text-black no-underline transition-transform hover:scale-[1.025]"
+            style={{
+              fontFamily: "'Georgia', serif",
+              letterSpacing: '0.05em',
+              fontSize: '0.875em',
+              textDecoration: 'none',
+              minWidth: '11.25rem',
+            }}
+          >
+            Join the Mailing List
+          </a>
+        </div>
+      </section>
+
+      {/* Opening Party */}
+      <section className="pb-20 md:pb-28">
+        <div className="max-w-2xl mx-auto px-6 md:px-8 text-center mb-10">
+          <p
+            style={{
+              fontFamily: "'Georgia', serif",
+              fontSize: '1.25em',
+              letterSpacing: '0.03em',
+            }}
+          >
+            Opening Party
+          </p>
+        </div>
+        <div className="gallery-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
+          <Gallery photoList={openingPartyPhotos} />
         </div>
       </section>
 
@@ -335,21 +368,6 @@ export default function App() {
               letterSpacing: '0.05em',
             }}
           >
-            <a
-              href="https://squareup.com/outreach/rjqyGM/subscribe"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-6 py-3 border-2 border-black text-black no-underline transition-transform hover:scale-[1.025]"
-              style={{
-                fontFamily: "'Georgia', serif",
-                letterSpacing: '0.05em',
-                fontSize: '0.875em',
-                textDecoration: 'none',
-                minWidth: '11.25rem',
-              }}
-            >
-              Join the Mailing List
-            </a>
             <a
               href="https://app.squareup.com/gift/MLJZ93FYMD68M/order"
               target="_blank"
