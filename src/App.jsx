@@ -38,7 +38,6 @@ const photos = [
 
   // Row 10: Vintage clothing
   { src: '/photos/vintage-clothing.jpg', alt: 'Vintage clothing display', w: 2000, h: 1325 },
-  { src: '/photos/vintage-clothing-and-ceramic-mug.jpg', alt: 'Vintage clothing with ceramic mug', w: 1500, h: 2000 },
 
   // Row 11: Clothing details (landscape strip)
   { src: '/photos/vintage-clothing-details-1.jpg', alt: 'Vintage clothing detail', w: 2000, h: 1331 },
@@ -56,9 +55,7 @@ const photos = [
 const openingPartyPhotos = [
   { src: '/photos/storefront-opening-party.jpg', alt: 'Storefront during opening party', w: 2000, h: 1330 },
   { src: '/photos/opening-party.jpg', alt: 'Opening party', w: 2000, h: 1325 },
-  { src: '/photos/opening-party-ahn.jpg', alt: 'Ahn at the opening party', w: 1332, h: 2000 },
   { src: '/photos/opening-party-hugs.jpg', alt: 'Opening party hugs', w: 2000, h: 1330 },
-  { src: '/photos/opening-party-owners.jpg', alt: 'Alyssa and Timothy in the Frenzy Faire doorway', w: 1325, h: 2000 },
   { src: '/photos/owners.jpg', alt: 'The owners', w: 2000, h: 1325 },
 ]
 
