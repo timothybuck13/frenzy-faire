@@ -59,16 +59,12 @@ a:hover {
   60% { transform: translateX(-50%) translateY(-4px); }
 }
 
-/* Mobile: single column for gallery rows */
+/* Mobile: single column masonry */
 @media (max-width: 640px) {
-  .gallery-row {
-    grid-template-columns: 1fr !important;
+  .gallery-container > div {
+    flex-direction: column !important;
   }
-}
-
-/* Tablet: 2-col max for triples */
-@media (min-width: 641px) and (max-width: 1023px) {
-  .gallery-row[style*="1fr 1fr 1fr"] {
-    grid-template-columns: 1fr 1fr !important;
+  .gallery-container > div > div {
+    flex: unset !important;
   }
 }

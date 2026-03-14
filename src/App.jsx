@@ -70,42 +70,6 @@ const photos = [
   { src: '/photos/owners.jpg', alt: 'The owners', w: 2000, h: 1325 },
 ]
 
-/* ───────── layout definitions ───────── */
-// Each row defines how many photos it takes and how to lay them out
-// type: 'full' | 'pair' | 'triple' | 'mixed-2' | 'wide-full'
-const rows = [
-  // Storefront + owners — 60/40 split
-  { type: 'mixed-2', count: 2, weights: [3, 2] },
-  // 3 portrait interiors
-  { type: 'triple', count: 3 },
-  // Wide ceramic shelf panoramic
-  { type: 'wide-full', count: 1 },
-  // Ceramics trio
-  { type: 'triple', count: 3 },
-  // Candles trio
-  { type: 'triple', count: 3 },
-  // Vases trio
-  { type: 'triple', count: 3 },
-  // Platter + candle holder pair
-  { type: 'pair', count: 2 },
-  // Moroccan/Berber trio
-  { type: 'triple', count: 3 },
-  // Berber necklaces + mid century prints
-  { type: 'mixed-2', count: 2, weights: [3, 2] },
-  // Vintage clothing pair
-  { type: 'mixed-2', count: 2, weights: [3, 2] },
-  // 3 clothing details landscape
-  { type: 'triple', count: 3 },
-  // 3 more clothing details
-  { type: 'triple', count: 3 },
-  // Textile + Alyssa
-  { type: 'mixed-2', count: 2, weights: [3, 2] },
-  // Opening party pair
-  { type: 'pair', count: 2 },
-  // Party moments trio
-  { type: 'triple', count: 3 },
-]
-
 /* ───────── lazy image component ───────── */
 function LazyImage({ src, alt, className, style }) {
   const [loaded, setLoaded] = useState(false)
@@ -145,67 +109,36 @@ function LazyImage({ src, alt, className, style }) {
   )
 }
 
-/* ───────── gallery component ───────── */
+/* ───────── gallery component (masonry) ───────── */
 function Gallery() {
-  const GAP = 6 // px
+  const COLS = 3
+  const GAP = 6
 
-  // Build rows from photo data
-  let idx = 0
-  const builtRows = rows.map((row, ri) => {
-    const rowPhotos = photos.slice(idx, idx + row.count)
-    idx += row.count
-    return { ...row, photos: rowPhotos, key: ri }
+  // Distribute photos into columns, balancing total height
+  const columns = Array.from({ length: COLS }, () => ({ photos: [], height: 0 }))
+  photos.forEach((p) => {
+    // Find shortest column
+    const shortest = columns.reduce((min, col, i) =>
+      col.height < columns[min].height ? i : min, 0)
+    columns[shortest].photos.push(p)
+    columns[shortest].height += p.h / p.w // normalized height
   })
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: `${GAP}px` }}>
-      {builtRows.map((row) => {
-        if (row.type === 'wide-full') {
-          const p = row.photos[0]
-          return (
+    <div style={{ display: 'flex', gap: `${GAP}px`, alignItems: 'flex-start' }}>
+      {columns.map((col, ci) => (
+        <div key={ci} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: `${GAP}px` }}>
+          {col.photos.map((p, pi) => (
             <LazyImage
-              key={row.key}
+              key={pi}
               src={p.src}
               alt={p.alt}
               className="gallery-img"
               style={{ width: '100%', aspectRatio: `${p.w}/${p.h}` }}
             />
-          )
-        }
-
-        if (row.type === 'pair') {
-          return (
-            <div key={row.key} className="gallery-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: `${GAP}px` }}>
-              {row.photos.map((p, i) => (
-                <LazyImage key={i} src={p.src} alt={p.alt} className="gallery-img" style={{ width: '100%', aspectRatio: `${p.w}/${p.h}` }} />
-              ))}
-            </div>
-          )
-        }
-
-        if (row.type === 'triple') {
-          return (
-            <div key={row.key} className="gallery-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: `${GAP}px` }}>
-              {row.photos.map((p, i) => (
-                <LazyImage key={i} src={p.src} alt={p.alt} className="gallery-img" style={{ width: '100%', aspectRatio: `${p.w}/${p.h}` }} />
-              ))}
-            </div>
-          )
-        }
-
-        if (row.type === 'mixed-2') {
-          const [w1, w2] = row.weights
-          return (
-            <div key={row.key} className="gallery-row" style={{ display: 'grid', gridTemplateColumns: `${w1}fr ${w2}fr`, gap: `${GAP}px` }}>
-              {row.photos.map((p, i) => (
-                <LazyImage key={i} src={p.src} alt={p.alt} className="gallery-img" style={{ width: '100%', aspectRatio: `${p.w}/${p.h}` }} />
-              ))}
-            </div>
-          )
-        }
-
-        return null
-      })}
+          ))}
+        </div>
+      ))}
     </div>
   )
 }
