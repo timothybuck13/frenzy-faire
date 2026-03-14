@@ -114,7 +114,7 @@ const featuredSrcs = new Set([
   '/photos/storefront.jpg',
   '/photos/flower-mug.jpg',
   '/photos/interior-1.jpg',
-  '/photos/vintage-clothing-and-ceramic-mug.jpg',
+  '/photos/mid-century-art-prints.jpg',
 ])
 
 /* ───────── gallery component (masonry) ───────── */
@@ -287,7 +287,7 @@ export default function App() {
               <img src="/photos/interior-1.jpg" alt="Frenzy Faire interior" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
             <div className="gallery-img" style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden' }}>
-              <img src="/photos/vintage-clothing-and-ceramic-mug.jpg" alt="Vintage clothing and ceramic mug" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              <img src="/photos/mid-century-art-prints.jpg" alt="Mid century modern art prints" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
           </div>
         </div>
