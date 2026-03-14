@@ -1,26 +1,340 @@
+import { useState, useEffect, useRef, useCallback } from 'react'
+
+/* ───────── photo data ───────── */
+const photos = [
+  // Row 1: Hero pair — storefront + owners in doorway
+  { src: '/photos/storefront.jpg', alt: 'Frenzy Faire storefront on Union Street', w: 2000, h: 1330 },
+  { src: '/photos/opening-party-owners.jpg', alt: 'Alyssa and Timothy in the Frenzy Faire doorway', w: 1325, h: 2000 },
+
+  // Row 2: Interior atmosphere
+  { src: '/photos/interior-1.jpg', alt: 'Vintage clothing rack bathed in afternoon light', w: 1331, h: 2000 },
+  { src: '/photos/interior-2.jpg', alt: 'Handcrafted ceramic vase with dried flowers on carved table', w: 1125, h: 2000 },
+  { src: '/photos/doorway.jpg', alt: 'View through the Frenzy Faire door into the store', w: 1325, h: 2000 },
+
+  // Row 3: Ceramics shelf — wide panoramic
+  { src: '/photos/ceramic-shelf.jpg', alt: 'Shelf of handcrafted ceramic pieces', w: 2000, h: 530 },
+
+  // Row 4: Ceramics detail
+  { src: '/photos/ceramics.jpg', alt: 'Handpainted ceramic mugs and candle holders', w: 1500, h: 2000 },
+  { src: '/photos/flower-mug.jpg', alt: 'Handcrafted flower mug', w: 1125, h: 2000 },
+  { src: '/photos/ahn-lee-cups.jpg', alt: 'Ahn Lee ceramic cups', w: 2000, h: 1600 },
+
+  // Row 5: Candles and vases
+  { src: '/photos/candle-holder.jpg', alt: 'North Beach handcrafted candle holder', w: 1500, h: 2000 },
+  { src: '/photos/candle-snuffers.jpg', alt: 'Handcrafted ceramic candle snuffers', w: 2000, h: 1500 },
+  { src: '/photos/candle-holders.jpg', alt: 'Handcrafted candle holders', w: 1500, h: 2000 },
+
+  // Row 6: Vases and platters
+  { src: '/photos/large-green-ceramic-vase.jpg', alt: 'Large green ceramic vase', w: 1500, h: 2000 },
+  { src: '/photos/ahn-lee-vase.jpg', alt: 'Ahn Lee vase', w: 2000, h: 2000 },
+  { src: '/photos/ceramic-flower-vase.jpg', alt: 'Handcrafted ceramic flower vase', w: 1500, h: 2000 },
+
+  // Row 7: Large platter + handcrafted candle holder (landscape)
+  { src: '/photos/large-ceramic-platter.jpg', alt: 'Large handcrafted ceramic platter', w: 1500, h: 2000 },
+  { src: '/photos/handcrafted-candle-holder.jpg', alt: 'Handcrafted candle holder detail', w: 2000, h: 1500 },
+
+  // Row 8: Moroccan + Berber collection
+  { src: '/photos/moroccan-collection.jpg', alt: 'Moroccan collection', w: 1500, h: 2000 },
+  { src: '/photos/vintage-berber-pottery.jpg', alt: 'Vintage Berber pottery', w: 1500, h: 2000 },
+  { src: '/photos/berber-textiles.jpg', alt: 'Berber textiles', w: 1500, h: 2000 },
+
+  // Row 9: Berber necklaces + mid century prints (landscape pair)
+  { src: '/photos/berber-necklaces.jpg', alt: 'Berber necklaces', w: 2000, h: 1331 },
+  { src: '/photos/mid-century-art-prints.jpg', alt: 'Mid century modern art prints', w: 1125, h: 2000 },
+
+  // Row 10: Vintage clothing
+  { src: '/photos/vintage-clothing.jpg', alt: 'Vintage clothing display', w: 2000, h: 1325 },
+  { src: '/photos/vintage-clothing-and-ceramic-mug.jpg', alt: 'Vintage clothing with ceramic mug', w: 1500, h: 2000 },
+
+  // Row 11: Clothing details (landscape strip)
+  { src: '/photos/vintage-clothing-details-1.jpg', alt: 'Vintage clothing detail', w: 2000, h: 1331 },
+  { src: '/photos/vintage-clothing-details-2.jpg', alt: 'Vintage clothing detail', w: 2000, h: 1331 },
+  { src: '/photos/vintage-clothing-details-3.jpg', alt: 'Vintage clothing detail', w: 2000, h: 1331 },
+
+  // Row 12: More clothing details
+  { src: '/photos/vintage-clothing-details-4.jpg', alt: 'Vintage clothing detail', w: 2000, h: 1331 },
+  { src: '/photos/vintage-clothing-details-5.jpg', alt: 'Vintage clothing detail', w: 1331, h: 2000 },
+  { src: '/photos/vintage-clothing-details-6.jpg', alt: 'Vintage clothing detail', w: 2000, h: 1331 },
+
+  // Row 13: Textile details + Alyssa
+  { src: '/photos/vintage-textile-details.jpg', alt: 'Vintage textile details', w: 2000, h: 1331 },
+  { src: '/photos/alyssa.jpg', alt: 'Alyssa Guerrero in the store', w: 1500, h: 2000 },
+
+  // Row 14: Opening party
+  { src: '/photos/storefront-opening-party.jpg', alt: 'Storefront during opening party', w: 2000, h: 1330 },
+  { src: '/photos/opening-party.jpg', alt: 'Opening party', w: 2000, h: 1325 },
+
+  // Row 15: Party moments
+  { src: '/photos/opening-party-ahn.jpg', alt: 'Ahn at the opening party', w: 1332, h: 2000 },
+  { src: '/photos/opening-party-hugs.jpg', alt: 'Opening party hugs', w: 2000, h: 1330 },
+  { src: '/photos/owners.jpg', alt: 'The owners', w: 2000, h: 1325 },
+]
+
+/* ───────── layout definitions ───────── */
+// Each row defines how many photos it takes and how to lay them out
+// type: 'full' | 'pair' | 'triple' | 'mixed-2' | 'wide-full'
+const rows = [
+  // Storefront + owners — 60/40 split
+  { type: 'mixed-2', count: 2, weights: [3, 2] },
+  // 3 portrait interiors
+  { type: 'triple', count: 3 },
+  // Wide ceramic shelf panoramic
+  { type: 'wide-full', count: 1 },
+  // Ceramics trio
+  { type: 'triple', count: 3 },
+  // Candles trio
+  { type: 'triple', count: 3 },
+  // Vases trio
+  { type: 'triple', count: 3 },
+  // Platter + candle holder pair
+  { type: 'pair', count: 2 },
+  // Moroccan/Berber trio
+  { type: 'triple', count: 3 },
+  // Berber necklaces + mid century prints
+  { type: 'mixed-2', count: 2, weights: [3, 2] },
+  // Vintage clothing pair
+  { type: 'mixed-2', count: 2, weights: [3, 2] },
+  // 3 clothing details landscape
+  { type: 'triple', count: 3 },
+  // 3 more clothing details
+  { type: 'triple', count: 3 },
+  // Textile + Alyssa
+  { type: 'mixed-2', count: 2, weights: [3, 2] },
+  // Opening party pair
+  { type: 'pair', count: 2 },
+  // Party moments trio
+  { type: 'triple', count: 3 },
+]
+
+/* ───────── lazy image component ───────── */
+function LazyImage({ src, alt, className, style }) {
+  const [loaded, setLoaded] = useState(false)
+  const [inView, setInView] = useState(false)
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setInView(true); observer.disconnect() } },
+      { rootMargin: '200px' }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <div ref={ref} className={className} style={style}>
+      {inView && (
+        <img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          onLoad={() => setLoaded(true)}
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+            opacity: loaded ? 1 : 0,
+            transition: 'opacity 0.4s ease',
+          }}
+        />
+      )}
+    </div>
+  )
+}
+
+/* ───────── gallery component ───────── */
+function Gallery() {
+  const GAP = 6 // px
+
+  // Build rows from photo data
+  let idx = 0
+  const builtRows = rows.map((row, ri) => {
+    const rowPhotos = photos.slice(idx, idx + row.count)
+    idx += row.count
+    return { ...row, photos: rowPhotos, key: ri }
+  })
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: `${GAP}px` }}>
+      {builtRows.map((row) => {
+        if (row.type === 'wide-full') {
+          const p = row.photos[0]
+          return (
+            <LazyImage
+              key={row.key}
+              src={p.src}
+              alt={p.alt}
+              className="gallery-img"
+              style={{ width: '100%', aspectRatio: `${p.w}/${p.h}` }}
+            />
+          )
+        }
+
+        if (row.type === 'pair') {
+          return (
+            <div key={row.key} className="gallery-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: `${GAP}px` }}>
+              {row.photos.map((p, i) => (
+                <LazyImage key={i} src={p.src} alt={p.alt} className="gallery-img" style={{ width: '100%', aspectRatio: `${p.w}/${p.h}` }} />
+              ))}
+            </div>
+          )
+        }
+
+        if (row.type === 'triple') {
+          return (
+            <div key={row.key} className="gallery-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: `${GAP}px` }}>
+              {row.photos.map((p, i) => (
+                <LazyImage key={i} src={p.src} alt={p.alt} className="gallery-img" style={{ width: '100%', aspectRatio: `${p.w}/${p.h}` }} />
+              ))}
+            </div>
+          )
+        }
+
+        if (row.type === 'mixed-2') {
+          const [w1, w2] = row.weights
+          return (
+            <div key={row.key} className="gallery-row" style={{ display: 'grid', gridTemplateColumns: `${w1}fr ${w2}fr`, gap: `${GAP}px` }}>
+              {row.photos.map((p, i) => (
+                <LazyImage key={i} src={p.src} alt={p.alt} className="gallery-img" style={{ width: '100%', aspectRatio: `${p.w}/${p.h}` }} />
+              ))}
+            </div>
+          )
+        }
+
+        return null
+      })}
+    </div>
+  )
+}
+
+/* ───────── lightbox component ───────── */
+function Lightbox({ photo, onClose, onPrev, onNext }) {
+  const handleKey = useCallback((e) => {
+    if (e.key === 'Escape') onClose()
+    if (e.key === 'ArrowLeft') onPrev()
+    if (e.key === 'ArrowRight') onNext()
+  }, [onClose, onPrev, onNext])
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', handleKey)
+      document.body.style.overflow = ''
+    }
+  }, [handleKey])
+
+  if (!photo) return null
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 9999,
+        background: 'rgba(0,0,0,0.92)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        cursor: 'pointer',
+      }}
+    >
+      <img
+        src={photo.src}
+        alt={photo.alt}
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          maxWidth: '90vw', maxHeight: '90vh',
+          objectFit: 'contain', cursor: 'default',
+        }}
+      />
+      <button
+        onClick={(e) => { e.stopPropagation(); onPrev() }}
+        style={{
+          position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)',
+          background: 'none', border: 'none', color: 'white', fontSize: '2rem',
+          cursor: 'pointer', padding: '12px', opacity: 0.7,
+        }}
+        aria-label="Previous photo"
+      >
+        &larr;
+      </button>
+      <button
+        onClick={(e) => { e.stopPropagation(); onNext() }}
+        style={{
+          position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)',
+          background: 'none', border: 'none', color: 'white', fontSize: '2rem',
+          cursor: 'pointer', padding: '12px', opacity: 0.7,
+        }}
+        aria-label="Next photo"
+      >
+        &rarr;
+      </button>
+      <button
+        onClick={onClose}
+        style={{
+          position: 'absolute', top: 16, right: 20,
+          background: 'none', border: 'none', color: 'white', fontSize: '1.5rem',
+          cursor: 'pointer', padding: '8px', opacity: 0.7,
+        }}
+        aria-label="Close"
+      >
+        &times;
+      </button>
+    </div>
+  )
+}
+
+/* ───────── main app ───────── */
 export default function App() {
+  const [lightboxIdx, setLightboxIdx] = useState(null)
   const appleMapsUrl = "https://maps.apple.com/place?address=484%20Union%20St,%20San%20Francisco,%20CA%20%2094133,%20United%20States&coordinate=37.800784,-122.407413&name=Frenzy%20Faire&place-id=I2A466D0813820E2D&map=explore"
 
-  const placeholders = [
-    { label: "Photo 1", from: "#c4a882", to: "#a88b6a" },
-    { label: "Photo 2", from: "#b89f7e", to: "#9a7f5e" },
-    { label: "Photo 3", from: "#c9b08e", to: "#a8916e" },
-    { label: "Photo 4", from: "#bfa47c", to: "#a0865c" },
-    { label: "Photo 5", from: "#c2a07a", to: "#a3815a" },
-    { label: "Photo 6", from: "#cbb494", to: "#ac9574" },
-  ]
+  // Add click handlers to gallery images
+  useEffect(() => {
+    const handler = (e) => {
+      const img = e.target.closest('.gallery-img')
+      if (!img) return
+      const src = img.querySelector('img')?.src || ''
+      const idx = photos.findIndex(p => src.endsWith(p.src))
+      if (idx >= 0) setLightboxIdx(idx)
+    }
+    document.addEventListener('click', handler)
+    return () => document.removeEventListener('click', handler)
+  }, [])
 
   return (
     <div>
-      {/* Hero */}
+      {/* Lightbox */}
+      {lightboxIdx !== null && (
+        <Lightbox
+          photo={photos[lightboxIdx]}
+          onClose={() => setLightboxIdx(null)}
+          onPrev={() => setLightboxIdx((lightboxIdx - 1 + photos.length) % photos.length)}
+          onNext={() => setLightboxIdx((lightboxIdx + 1) % photos.length)}
+        />
+      )}
+
+      {/* Hero — storefront background */}
       <section
         className="relative flex items-center justify-center"
-        style={{
-          minHeight: '100vh',
-          background: 'linear-gradient(135deg, #c4a47a 0%, #a88860 40%, #8b6f4e 100%)',
-        }}
+        style={{ minHeight: '100vh' }}
       >
-        <div className="text-center px-6">
+        <div
+          style={{
+            position: 'absolute', inset: 0,
+            backgroundImage: 'url(/photos/storefront.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute', inset: 0,
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.45) 100%)',
+          }}
+        />
+        <div className="relative text-center px-6">
           <h1
             className="text-white font-normal tracking-wider"
             style={{
@@ -28,27 +342,30 @@ export default function App() {
               fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
               lineHeight: 1.15,
               letterSpacing: '0.08em',
+              textShadow: '0 2px 20px rgba(0,0,0,0.3)',
             }}
           >
             Frenzy Faire
           </h1>
           <p
-            className="text-white/80 mt-4"
+            className="text-white/85 mt-4"
             style={{
               fontFamily: "'Georgia', serif",
               fontSize: 'clamp(0.875rem, 2vw, 1.25rem)',
               letterSpacing: '0.12em',
               textTransform: 'uppercase',
+              textShadow: '0 1px 10px rgba(0,0,0,0.3)',
             }}
           >
             Handcrafted & Vintage Goods
           </p>
           <p
-            className="text-white/60 mt-3"
+            className="text-white/70 mt-3"
             style={{
               fontFamily: "'Georgia', serif",
               fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
               letterSpacing: '0.05em',
+              textShadow: '0 1px 8px rgba(0,0,0,0.3)',
             }}
           >
             North Beach, San Francisco
@@ -79,33 +396,10 @@ export default function App() {
         </div>
       </section>
 
-      {/* Photo Grid */}
+      {/* Photo Gallery */}
       <section className="pb-20 md:pb-28">
-        <div className="max-w-5xl mx-auto px-6 md:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {placeholders.map((ph, i) => (
-              <div
-                key={i}
-                className="relative overflow-hidden"
-                style={{
-                  aspectRatio: '4 / 3',
-                  background: `linear-gradient(135deg, ${ph.from}, ${ph.to})`,
-                }}
-              >
-                <span
-                  className="absolute inset-0 flex items-center justify-center text-white/30"
-                  style={{
-                    fontFamily: "'Georgia', serif",
-                    fontSize: '0.875rem',
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  {ph.label}
-                </span>
-              </div>
-            ))}
-          </div>
+        <div className="gallery-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
+          <Gallery />
         </div>
       </section>
 

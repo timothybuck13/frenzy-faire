@@ -39,3 +39,30 @@ a {
 a:hover {
   text-decoration-thickness: 1px;
 }
+
+/* Gallery images — sharp corners, subtle hover */
+.gallery-img {
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+.gallery-img img {
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease;
+}
+.gallery-img:hover img {
+  transform: scale(1.03);
+}
+
+/* Mobile: single column for gallery rows */
+@media (max-width: 640px) {
+  .gallery-row {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Tablet: 2-col max for triples */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .gallery-row[style*="1fr 1fr 1fr"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
