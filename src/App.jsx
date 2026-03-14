@@ -252,7 +252,7 @@ export default function App() {
             href="https://www.instagram.com/frenzyfaire/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 mt-8 px-5 py-2.5 border-2 border-black text-black no-underline transition-transform hover:scale-[1.025]"
+            className="inline-flex items-center gap-3 mt-8 px-5 py-2.5 border border-black text-black no-underline hover:bg-black hover:text-white transition-colors"
             style={{
               fontFamily: "'Georgia', serif",
               letterSpacing: '0.05em',
@@ -302,7 +302,7 @@ export default function App() {
             href="https://app.squareup.com/gift/MLJZ93FYMD68M/order"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-6 py-3 border-2 border-black text-black no-underline transition-transform hover:scale-[1.025]"
+            className="inline-flex items-center justify-center px-6 py-3 border border-black text-black no-underline hover:bg-black hover:text-white transition-colors"
             style={{
               fontFamily: "'Georgia', serif",
               letterSpacing: '0.05em',
@@ -329,7 +329,7 @@ export default function App() {
             href="https://squareup.com/outreach/rjqyGM/subscribe"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-6 py-3 border-2 border-black text-black no-underline transition-transform hover:scale-[1.025]"
+            className="inline-flex items-center justify-center px-6 py-3 border border-black text-black no-underline hover:bg-black hover:text-white transition-colors"
             style={{
               fontFamily: "'Georgia', serif",
               letterSpacing: '0.05em',
