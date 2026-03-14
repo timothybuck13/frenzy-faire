@@ -231,6 +231,7 @@ export default function App() {
         {/* Scroll indicator — positioned at bottom of hero viewport */}
         <div
           className="scroll-indicator"
+          onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
           style={{
             position: 'absolute',
             bottom: '2rem',
@@ -241,6 +242,7 @@ export default function App() {
             alignItems: 'center',
             opacity: 0.7,
             animation: 'bounce 2s ease infinite',
+            cursor: 'pointer',
           }}
         >
           <svg
@@ -254,7 +256,7 @@ export default function App() {
       </section>
 
       {/* About */}
-      <section className="py-20 md:py-28">
+      <section id="about" className="py-20 md:py-28">
         <div className="max-w-2xl mx-auto px-6 md:px-8">
           <p
             className="leading-relaxed"
