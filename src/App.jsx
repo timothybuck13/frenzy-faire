@@ -216,31 +216,30 @@ export default function App() {
           >
             Thursday – Sunday, 12 – 6pm
           </p>
+        </div>
 
-          {/* Scroll indicator */}
-          <div
-            className="scroll-indicator"
-            style={{
-              position: 'absolute',
-              bottom: 'clamp(1.5rem, 4vh, 2.5rem)',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '0.5rem',
-              opacity: 0.7,
-              animation: 'bounce 2s ease infinite',
-            }}
+        {/* Scroll indicator — positioned at bottom of hero viewport */}
+        <div
+          className="scroll-indicator"
+          style={{
+            position: 'absolute',
+            bottom: '2rem',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            opacity: 0.7,
+            animation: 'bounce 2s ease infinite',
+          }}
+        >
+          <svg
+            width="24" height="24" viewBox="0 0 24 24"
+            fill="none" stroke="white" strokeWidth="1.5"
+            strokeLinecap="round" strokeLinejoin="round"
           >
-            <svg
-              width="24" height="24" viewBox="0 0 24 24"
-              fill="none" stroke="white" strokeWidth="1.5"
-              strokeLinecap="round" strokeLinejoin="round"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
         </div>
       </section>
 
