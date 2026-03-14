@@ -228,7 +228,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* About */}
+      {/* About + Instagram button */}
       <section id="about" className="py-20 md:py-28">
         <div className="max-w-2xl mx-auto px-6 md:px-8">
           <p
@@ -248,43 +248,20 @@ export default function App() {
             . Born of a love for texture, color, and the tactile process of
             creating by hand.
           </p>
-        </div>
-      </section>
-
-      {/* Featured trio: pottery, interior, clothing */}
-      <section className="pb-8 md:pb-12">
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
-          <div className="gallery-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '6px' }}>
-            <div className="gallery-img" style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden' }}>
-              <img src="/photos/flower-mug.jpg" alt="Handcrafted flower mug" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-            </div>
-            <div className="gallery-img" style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden' }}>
-              <img src="/photos/interior-1.jpg" alt="Frenzy Faire interior" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-            </div>
-            <div className="gallery-img" style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden' }}>
-              <img src="/photos/mid-century-art-prints.jpg" alt="Mid century modern art prints" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Instagram button */}
-      <section className="pb-16 md:pb-20">
-        <div className="max-w-2xl mx-auto px-6 md:px-8 text-center">
           <a
             href="https://www.instagram.com/frenzyfaire/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-3 px-6 py-3 border-2 border-black text-black no-underline transition-transform hover:scale-[1.025]"
+            className="inline-flex items-center gap-3 mt-8 px-5 py-2.5 border-2 border-black text-black no-underline transition-transform hover:scale-[1.025]"
             style={{
               fontFamily: "'Georgia', serif",
               letterSpacing: '0.05em',
-              fontSize: '0.875em',
+              fontSize: '0.8em',
               textDecoration: 'none',
             }}
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -301,26 +278,53 @@ export default function App() {
         </div>
       </section>
 
-      {/* Photo Gallery */}
+      {/* Featured trio */}
+      <section className="pb-8 md:pb-12">
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '6px' }}>
+            <div className="gallery-img" style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden' }}>
+              <img src="/photos/flower-mug.jpg" alt="Handcrafted flower mug" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
+            <div className="gallery-img" style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden' }}>
+              <img src="/photos/interior-1.jpg" alt="Frenzy Faire interior" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
+            <div className="gallery-img" style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden' }}>
+              <img src="/photos/mid-century-art-prints.jpg" alt="Mid century modern art prints" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Gift Card button */}
+      <section className="py-16 md:py-20">
+        <div className="max-w-2xl mx-auto px-6 md:px-8 text-center">
+          <a
+            href="https://app.squareup.com/gift/MLJZ93FYMD68M/order"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-6 py-3 border-2 border-black text-black no-underline transition-transform hover:scale-[1.025]"
+            style={{
+              fontFamily: "'Georgia', serif",
+              letterSpacing: '0.05em',
+              fontSize: '0.875em',
+              textDecoration: 'none',
+            }}
+          >
+            Buy a Gift Card
+          </a>
+        </div>
+      </section>
+
+      {/* Main Gallery */}
       <section className="pb-20 md:pb-28">
-        <div className="gallery-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
           <Gallery photoList={photos.filter(p => !featuredSrcs.has(p.src))} />
         </div>
       </section>
 
-      {/* Mailing List CTA */}
-      <section className="py-20 md:py-28 border-t border-neutral-200">
+      {/* Mailing List button */}
+      <section className="py-16 md:py-20">
         <div className="max-w-2xl mx-auto px-6 md:px-8 text-center">
-          <p
-            style={{
-              fontFamily: "'Georgia', serif",
-              fontSize: '1.25em',
-              letterSpacing: '0.03em',
-              marginBottom: '1.5rem',
-            }}
-          >
-            Stay in the loop
-          </p>
           <a
             href="https://squareup.com/outreach/rjqyGM/subscribe"
             target="_blank"
@@ -331,7 +335,6 @@ export default function App() {
               letterSpacing: '0.05em',
               fontSize: '0.875em',
               textDecoration: 'none',
-              minWidth: '11.25rem',
             }}
           >
             Join the Mailing List
@@ -352,55 +355,23 @@ export default function App() {
             Opening Party
           </p>
         </div>
-        <div className="gallery-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
           <Gallery photoList={openingPartyPhotos} />
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 md:py-16 border-t border-neutral-200">
+      <footer className="py-12 md:py-16">
         <div className="max-w-2xl mx-auto px-6 md:px-8 text-center">
-          <div
-            className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-10"
-            style={{
-              fontFamily: "'Georgia', serif",
-              fontSize: '0.875em',
-              letterSpacing: '0.05em',
-            }}
-          >
-            <a
-              href="https://app.squareup.com/gift/MLJZ93FYMD68M/order"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-6 py-3 border-2 border-black text-black no-underline transition-transform hover:scale-[1.025]"
-              style={{
-                fontFamily: "'Georgia', serif",
-                letterSpacing: '0.05em',
-                fontSize: '0.875em',
-                textDecoration: 'none',
-                minWidth: '11.25rem',
-              }}
-            >
-              Buy a Gift Card
-            </a>
-          </div>
           <p
-            className="text-neutral-400"
             style={{
               fontFamily: "'Georgia', serif",
-              fontSize: '0.75em',
+              fontSize: '0.85em',
               letterSpacing: '0.03em',
+              color: '#666',
             }}
           >
-            Built by{' '}
-            <a
-              href="https://timothybuck.me"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-neutral-400 hover:text-neutral-600 transition-colors"
-            >
-              Timothy Buck
-            </a>
+            484 Union Street, North Beach, San Francisco
           </p>
         </div>
       </footer>
