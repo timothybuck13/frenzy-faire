@@ -43,7 +43,6 @@ a:hover {
 /* Gallery images — sharp corners, subtle hover */
 .gallery-img {
   overflow: hidden;
-  cursor: pointer;
   position: relative;
 }
 .gallery-img img {

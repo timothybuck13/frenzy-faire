@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 /* ───────── photo data ───────── */
 const photos = [
@@ -210,110 +210,12 @@ function Gallery() {
   )
 }
 
-/* ───────── lightbox component ───────── */
-function Lightbox({ photo, onClose, onPrev, onNext }) {
-  const handleKey = useCallback((e) => {
-    if (e.key === 'Escape') onClose()
-    if (e.key === 'ArrowLeft') onPrev()
-    if (e.key === 'ArrowRight') onNext()
-  }, [onClose, onPrev, onNext])
-
-  useEffect(() => {
-    document.addEventListener('keydown', handleKey)
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.removeEventListener('keydown', handleKey)
-      document.body.style.overflow = ''
-    }
-  }, [handleKey])
-
-  if (!photo) return null
-
-  return (
-    <div
-      onClick={onClose}
-      style={{
-        position: 'fixed', inset: 0, zIndex: 9999,
-        background: 'rgba(0,0,0,0.92)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        cursor: 'pointer',
-      }}
-    >
-      <img
-        src={photo.src}
-        alt={photo.alt}
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          maxWidth: '90vw', maxHeight: '90vh',
-          objectFit: 'contain', cursor: 'default',
-        }}
-      />
-      <button
-        onClick={(e) => { e.stopPropagation(); onPrev() }}
-        style={{
-          position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)',
-          background: 'none', border: 'none', color: 'white', fontSize: '2rem',
-          cursor: 'pointer', padding: '12px', opacity: 0.7,
-        }}
-        aria-label="Previous photo"
-      >
-        &larr;
-      </button>
-      <button
-        onClick={(e) => { e.stopPropagation(); onNext() }}
-        style={{
-          position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)',
-          background: 'none', border: 'none', color: 'white', fontSize: '2rem',
-          cursor: 'pointer', padding: '12px', opacity: 0.7,
-        }}
-        aria-label="Next photo"
-      >
-        &rarr;
-      </button>
-      <button
-        onClick={onClose}
-        style={{
-          position: 'absolute', top: 16, right: 20,
-          background: 'none', border: 'none', color: 'white', fontSize: '1.5rem',
-          cursor: 'pointer', padding: '8px', opacity: 0.7,
-        }}
-        aria-label="Close"
-      >
-        &times;
-      </button>
-    </div>
-  )
-}
-
 /* ───────── main app ───────── */
 export default function App() {
-  const [lightboxIdx, setLightboxIdx] = useState(null)
   const appleMapsUrl = "https://maps.apple.com/place?address=484%20Union%20St,%20San%20Francisco,%20CA%20%2094133,%20United%20States&coordinate=37.800784,-122.407413&name=Frenzy%20Faire&place-id=I2A466D0813820E2D&map=explore"
-
-  // Add click handlers to gallery images
-  useEffect(() => {
-    const handler = (e) => {
-      const img = e.target.closest('.gallery-img')
-      if (!img) return
-      const src = img.querySelector('img')?.src || ''
-      const idx = photos.findIndex(p => src.endsWith(p.src))
-      if (idx >= 0) setLightboxIdx(idx)
-    }
-    document.addEventListener('click', handler)
-    return () => document.removeEventListener('click', handler)
-  }, [])
 
   return (
     <div>
-      {/* Lightbox */}
-      {lightboxIdx !== null && (
-        <Lightbox
-          photo={photos[lightboxIdx]}
-          onClose={() => setLightboxIdx(null)}
-          onPrev={() => setLightboxIdx((lightboxIdx - 1 + photos.length) % photos.length)}
-          onNext={() => setLightboxIdx((lightboxIdx + 1) % photos.length)}
-        />
-      )}
 
       {/* Hero — storefront background */}
       <section
