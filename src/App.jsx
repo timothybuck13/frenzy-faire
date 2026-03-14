@@ -272,13 +272,13 @@ export default function App() {
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
           <div className="gallery-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '6px' }}>
             <div className="gallery-img" style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden' }}>
-              <img src="/photos/ceramics.jpg" alt="Handpainted ceramic mugs and candle holders" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              <img src="/photos/flower-mug.jpg" alt="Handcrafted flower mug" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
             <div className="gallery-img" style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden' }}>
-              <img src="/photos/interior-1.jpg" alt="Vintage clothing rack bathed in afternoon light" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              <img src="/photos/interior-1.jpg" alt="Frenzy Faire interior" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
             <div className="gallery-img" style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden' }}>
-              <img src="/photos/vintage-clothing.jpg" alt="Vintage clothing display" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              <img src="/photos/vintage-clothing-and-ceramic-mug.jpg" alt="Vintage clothing and ceramic mug" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
           </div>
         </div>
