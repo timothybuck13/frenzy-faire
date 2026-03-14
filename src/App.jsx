@@ -370,6 +370,31 @@ export default function App() {
           >
             North Beach, San Francisco
           </p>
+
+          {/* Scroll indicator */}
+          <div
+            className="scroll-indicator"
+            style={{
+              position: 'absolute',
+              bottom: 'clamp(1.5rem, 4vh, 2.5rem)',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '0.5rem',
+              opacity: 0.7,
+              animation: 'bounce 2s ease infinite',
+            }}
+          >
+            <svg
+              width="24" height="24" viewBox="0 0 24 24"
+              fill="none" stroke="white" strokeWidth="1.5"
+              strokeLinecap="round" strokeLinejoin="round"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
         </div>
       </section>
 
@@ -385,7 +410,7 @@ export default function App() {
               letterSpacing: '0.02em',
             }}
           >
-            An eclectic collection of handcrafted ceramics, vintage home goods,
+            Frenzy Faire is an eclectic collection of handcrafted ceramics, vintage home goods,
             jewelry, and clothing — curated by artist{' '}
             <a href="https://alyssaguerrero.com" target="_blank" rel="noopener noreferrer">
               Alyssa Guerrero
