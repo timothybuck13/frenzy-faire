@@ -368,7 +368,18 @@ export default function App() {
               textShadow: '0 1px 8px rgba(0,0,0,0.3)',
             }}
           >
-            North Beach, San Francisco
+            484 Union Street, North Beach, San Francisco
+          </p>
+          <p
+            className="text-white/70 mt-2"
+            style={{
+              fontFamily: "'Georgia', serif",
+              fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+              letterSpacing: '0.05em',
+              textShadow: '0 1px 8px rgba(0,0,0,0.3)',
+            }}
+          >
+            Thursday – Sunday, 12 – 6pm
           </p>
 
           {/* Scroll indicator */}
@@ -425,44 +436,6 @@ export default function App() {
       <section className="pb-20 md:pb-28">
         <div className="gallery-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
           <Gallery />
-        </div>
-      </section>
-
-      {/* Visit Us */}
-      <section className="py-20 md:py-28 bg-neutral-50">
-        <div className="max-w-2xl mx-auto px-6 md:px-8 text-center">
-          <h2
-            className="mb-10"
-            style={{
-              fontFamily: "'Georgia', serif",
-              fontSize: '1.75em',
-              lineHeight: 1.25,
-              fontWeight: 400,
-              letterSpacing: '0.05rem',
-            }}
-          >
-            Visit Us
-          </h2>
-          <div
-            className="space-y-4"
-            style={{
-              fontFamily: "'Georgia', serif",
-              fontSize: '1em',
-              lineHeight: 1.7,
-            }}
-          >
-            <p>Thursday – Sunday, 12 – 6pm</p>
-            <p>
-              <a href={appleMapsUrl} target="_blank" rel="noopener noreferrer">
-                484 Union Street, San Francisco
-              </a>
-            </p>
-            <p>
-              <a href="mailto:alyssa@frenzyfaire.com">
-                alyssa@frenzyfaire.com
-              </a>
-            </p>
-          </div>
         </div>
       </section>
 
