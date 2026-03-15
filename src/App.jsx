@@ -55,7 +55,6 @@ const photos = [
 const openingPartyPhotos = [
   { src: '/photos/storefront-opening-party.jpg', alt: 'Storefront during opening party', w: 2000, h: 1330 },
   { src: '/photos/opening-party.jpg', alt: 'Opening party', w: 2000, h: 1325 },
-  { src: '/photos/opening-party-hugs.jpg', alt: 'Opening party hugs', w: 2000, h: 1330 },
   { src: '/photos/owners.jpg', alt: 'The owners', w: 2000, h: 1325 },
 ]
 
@@ -341,17 +340,6 @@ export default function App() {
 
       {/* Opening Party */}
       <section className="pb-20 md:pb-28">
-        <div className="max-w-2xl mx-auto px-6 md:px-8 text-center mb-10">
-          <p
-            style={{
-              fontFamily: "'Georgia', serif",
-              fontSize: '1.25em',
-              letterSpacing: '0.03em',
-            }}
-          >
-            Opening Party
-          </p>
-        </div>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
           <Gallery photoList={openingPartyPhotos} />
         </div>
