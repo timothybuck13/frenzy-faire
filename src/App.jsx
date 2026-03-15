@@ -293,7 +293,7 @@ export default function App() {
             className="text-white mt-3"
             style={{
               fontFamily: "'Georgia', serif",
-              fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+              fontSize: 'clamp(1rem, 2.5vw, 1.15rem)',
               letterSpacing: '0.05em',
               textShadow: '0 2px 12px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.5)',
             }}
@@ -304,7 +304,7 @@ export default function App() {
             className="text-white mt-2"
             style={{
               fontFamily: "'Georgia', serif",
-              fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+              fontSize: 'clamp(1rem, 2.5vw, 1.15rem)',
               letterSpacing: '0.05em',
               textShadow: '0 2px 12px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.5)',
             }}
