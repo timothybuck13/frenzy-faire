@@ -389,7 +389,7 @@ export default function App() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8">
+      <footer className="py-24">
         <div className="max-w-2xl mx-auto px-6 md:px-8 text-center">
           <p
             style={{
