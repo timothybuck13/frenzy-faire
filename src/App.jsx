@@ -293,8 +293,8 @@ export default function App() {
       </section>
 
       {/* Gift Card button */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-2xl mx-auto px-6 md:px-8 text-center">
+      <section className="py-20 md:py-28">
+        <div className="max-w-2xl mx-auto px-6 md:px-8 text-center flex items-center justify-center" style={{ minHeight: '8rem' }}>
           <a
             href="https://app.squareup.com/gift/MLJZ93FYMD68M/order"
             target="_blank"
@@ -320,8 +320,8 @@ export default function App() {
       </section>
 
       {/* Mailing List button */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-2xl mx-auto px-6 md:px-8 text-center">
+      <section className="py-20 md:py-28">
+        <div className="max-w-2xl mx-auto px-6 md:px-8 text-center flex items-center justify-center" style={{ minHeight: '8rem' }}>
           <a
             href="https://squareup.com/outreach/rjqyGM/subscribe"
             target="_blank"
