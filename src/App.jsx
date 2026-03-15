@@ -121,7 +121,6 @@ const photos = [
   { src: '/photos/vintage-clothing-details-1.jpg', alt: 'Vintage clothing detail', w: 2000, h: 1331 },
   { src: '/photos/vintage-clothing-details-2.jpg', alt: 'Vintage clothing detail', w: 2000, h: 1331 },
   // Row 12: More clothing details
-  { src: '/photos/vintage-clothing-details-4.jpg', alt: 'Vintage clothing detail', w: 2000, h: 1331 },
   { src: '/photos/vintage-clothing-details-5.jpg', alt: 'Vintage clothing detail', w: 1331, h: 2000 },
   { src: '/photos/vintage-clothing-details-6.jpg', alt: 'Vintage clothing detail', w: 2000, h: 1331 },
 
