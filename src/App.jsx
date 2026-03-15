@@ -1,4 +1,43 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
+
+/* ───────── lightbox component ───────── */
+function Lightbox({ src, alt, onClose }) {
+  useEffect(() => {
+    const handleKey = (e) => { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', handleKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', handleKey)
+      document.body.style.overflow = ''
+    }
+  }, [onClose])
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 9999,
+        backgroundColor: 'rgba(0,0,0,0.9)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        cursor: 'pointer',
+      }}
+    >
+      <img
+        src={src}
+        alt={alt}
+        style={{
+          maxWidth: '95vw',
+          maxHeight: '95vh',
+          objectFit: 'contain',
+        }}
+      />
+    </div>
+  )
+}
 
 /* ───────── photo data ───────── */
 const photos = [
@@ -106,7 +145,7 @@ const featuredSrcs = new Set([
 ])
 
 /* ───────── gallery component (masonry) ───────── */
-function Gallery({ photoList }) {
+function Gallery({ photoList, onImageClick }) {
   const COLS = 3
   const GAP = 6
 
@@ -123,13 +162,14 @@ function Gallery({ photoList }) {
       {columns.map((col, ci) => (
         <div key={ci} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: `${GAP}px` }}>
           {col.photos.map((p, pi) => (
-            <LazyImage
-              key={pi}
-              src={p.src}
-              alt={p.alt}
-              className="gallery-img"
-              style={{ width: '100%', aspectRatio: `${p.w}/${p.h}` }}
-            />
+            <div key={pi} onClick={() => onImageClick && onImageClick(p)} style={{ cursor: 'pointer' }}>
+              <LazyImage
+                src={p.src}
+                alt={p.alt}
+                className="gallery-img"
+                style={{ width: '100%', aspectRatio: `${p.w}/${p.h}` }}
+              />
+            </div>
           ))}
         </div>
       ))}
@@ -139,10 +179,13 @@ function Gallery({ photoList }) {
 
 /* ───────── main app ───────── */
 export default function App() {
+  const [lightboxPhoto, setLightboxPhoto] = useState(null)
+  const closeLightbox = useCallback(() => setLightboxPhoto(null), [])
   const appleMapsUrl = "https://maps.apple.com/place?address=484%20Union%20St,%20San%20Francisco,%20CA%20%2094133,%20United%20States&coordinate=37.800784,-122.407413&name=Frenzy%20Faire&place-id=I2A466D0813820E2D&map=explore"
 
   return (
     <div>
+      {lightboxPhoto && <Lightbox src={lightboxPhoto.src} alt={lightboxPhoto.alt} onClose={closeLightbox} />}
 
       {/* Hero — storefront background */}
       <section
@@ -278,13 +321,13 @@ export default function App() {
       <section className="pb-0">
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '6px' }}>
-            <div className="gallery-img" style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden' }}>
+            <div className="gallery-img" onClick={() => setLightboxPhoto({ src: '/photos/flower-mug.jpg', alt: 'Handcrafted flower mug' })} style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden', cursor: 'pointer' }}>
               <img src="/photos/flower-mug.jpg" alt="Handcrafted flower mug" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
-            <div className="gallery-img" style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden' }}>
+            <div className="gallery-img" onClick={() => setLightboxPhoto({ src: '/photos/interior-1.jpg', alt: 'Frenzy Faire interior' })} style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden', cursor: 'pointer' }}>
               <img src="/photos/interior-1.jpg" alt="Frenzy Faire interior" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
-            <div className="gallery-img" style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden' }}>
+            <div className="gallery-img" onClick={() => setLightboxPhoto({ src: '/photos/mid-century-art-prints.jpg', alt: 'Mid century modern art prints' })} style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden', cursor: 'pointer' }}>
               <img src="/photos/mid-century-art-prints.jpg" alt="Mid century modern art prints" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
           </div>
@@ -314,7 +357,7 @@ export default function App() {
       {/* Main Gallery */}
       <section className="pb-0">
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
-          <Gallery photoList={photos.filter(p => !featuredSrcs.has(p.src))} />
+          <Gallery photoList={photos.filter(p => !featuredSrcs.has(p.src))} onImageClick={setLightboxPhoto} />
         </div>
       </section>
 
@@ -341,7 +384,7 @@ export default function App() {
       {/* Opening Party */}
       <section className="pb-0">
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
-          <Gallery photoList={openingPartyPhotos} />
+          <Gallery photoList={openingPartyPhotos} onImageClick={setLightboxPhoto} />
         </div>
       </section>
 
