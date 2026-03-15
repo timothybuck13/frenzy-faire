@@ -284,9 +284,11 @@ export default function App() {
             src="/logo.png"
             alt="Frenzy Faire — Handcrafted & Vintage Goods"
             style={{
-              maxWidth: 'clamp(280px, 50vw, 500px)',
+              maxWidth: 'clamp(320px, 75vw, 500px)',
               height: 'auto',
               filter: 'invert(1)',
+              margin: '0 auto',
+              display: 'block',
             }}
           />
           <p
