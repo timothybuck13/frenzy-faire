@@ -195,8 +195,11 @@ function Gallery({ photoList, onImageClick }) {
     columns[shortest].height += p.h / p.w
   })
 
+  // Find the tallest column and align all columns to the bottom
+  const maxHeight = Math.max(...columns.map(c => c.height))
+
   return (
-    <div style={{ display: 'flex', gap: `${GAP}px`, alignItems: 'flex-start' }}>
+    <div style={{ display: 'flex', gap: `${GAP}px`, alignItems: 'flex-end' }}>
       {columns.map((col, ci) => (
         <div key={ci} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: `${GAP}px` }}>
           {col.photos.map((p, pi) => (
