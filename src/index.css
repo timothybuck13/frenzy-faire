@@ -30,7 +30,7 @@ body {
 }
 
 a {
-  color: #33ADA9;
+  color: inherit;
   text-decoration: underline;
   text-decoration-thickness: 0.5px;
   text-underline-offset: 0.2em;

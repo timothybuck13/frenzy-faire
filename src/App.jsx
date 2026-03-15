@@ -239,7 +239,7 @@ export default function App() {
           >
             Frenzy Faire is an eclectic collection of handcrafted ceramics, vintage home goods,
             jewelry, and clothing — curated by artist{' '}
-            <a href="https://alyssaguerrero.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://alyssaguerrero.com" target="_blank" rel="noopener noreferrer" className="text-black underline">
               Alyssa Guerrero
             </a>
             . Born of a love for texture, color, and the tactile process of
