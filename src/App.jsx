@@ -339,14 +339,14 @@ export default function App() {
       </section>
 
       {/* Opening Party */}
-      <section className="pb-20 md:pb-28">
+      <section className="pb-0">
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
           <Gallery photoList={openingPartyPhotos} />
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 md:py-16">
+      <footer className="py-8">
         <div className="max-w-2xl mx-auto px-6 md:px-8 text-center">
           <p
             style={{
