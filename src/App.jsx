@@ -174,23 +174,23 @@ export default function App() {
             }}
           />
           <p
-            className="text-white/70 mt-3"
+            className="text-white mt-3"
             style={{
               fontFamily: "'Georgia', serif",
               fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
               letterSpacing: '0.05em',
-              textShadow: '0 1px 8px rgba(0,0,0,0.3)',
+              textShadow: '0 2px 12px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.5)',
             }}
           >
             484 Union Street, North Beach, San Francisco
           </p>
           <p
-            className="text-white/70 mt-2"
+            className="text-white mt-2"
             style={{
               fontFamily: "'Georgia', serif",
               fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
               letterSpacing: '0.05em',
-              textShadow: '0 1px 8px rgba(0,0,0,0.3)',
+              textShadow: '0 2px 12px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.5)',
             }}
           >
             Thursday – Sunday, 12 – 6pm
