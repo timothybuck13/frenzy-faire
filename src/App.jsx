@@ -454,7 +454,13 @@ export default function App() {
       {/* Opening Party */}
       <section className="pb-0">
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
-          <Gallery photoList={openingPartyPhotos} onImageClick={openLightbox} />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '6px' }}>
+            {openingPartyPhotos.map((p, i) => (
+              <div key={i} onClick={() => openLightbox(p)} style={{ cursor: 'pointer', aspectRatio: '3/2', overflow: 'hidden' }}>
+                <img src={p.src} alt={p.alt} loading="lazy" className="gallery-img" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
