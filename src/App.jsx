@@ -279,13 +279,10 @@ export default function App() {
               letterSpacing: '0.02em',
             }}
           >
-            Frenzy Faire is an eclectic collection of handcrafted ceramics, vintage home goods,
-            jewelry, and clothing — curated by artist{' '}
-            <a href="https://alyssaguerrero.com" target="_blank" rel="noopener noreferrer" className="text-black underline">
+            Frenzy Faire offers{' '}
+            <a href="https://www.instagram.com/alyssamarieguerrero/" target="_blank" rel="noopener noreferrer" className="text-black underline">
               Alyssa Guerrero
-            </a>
-            . Born of a love for texture, color, and the tactile process of
-            creating by hand.
+            </a>'s handcrafted ceramics and jewelry, alongside her curated vintage home goods and clothing from around the world. This special North Beach shop is born of a love for texture, color, pattern, and the tactile process of creating by hand.
           </p>
           <a
             href="https://www.instagram.com/frenzyfaire/"
