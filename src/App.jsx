@@ -1,16 +1,36 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 
 /* ───────── lightbox component ───────── */
-function Lightbox({ src, alt, onClose }) {
+function Lightbox({ allPhotos, currentIndex, onClose, onPrev, onNext }) {
+  const photo = allPhotos[currentIndex]
+
   useEffect(() => {
-    const handleKey = (e) => { if (e.key === 'Escape') onClose() }
+    const handleKey = (e) => {
+      if (e.key === 'Escape') onClose()
+      if (e.key === 'ArrowLeft') onPrev()
+      if (e.key === 'ArrowRight') onNext()
+    }
     document.addEventListener('keydown', handleKey)
     document.body.style.overflow = 'hidden'
     return () => {
       document.removeEventListener('keydown', handleKey)
       document.body.style.overflow = ''
     }
-  }, [onClose])
+  }, [onClose, onPrev, onNext])
+
+  const arrowStyle = {
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    background: 'none',
+    border: 'none',
+    color: 'rgba(255,255,255,0.7)',
+    fontSize: '2.5rem',
+    cursor: 'pointer',
+    padding: '1rem',
+    zIndex: 10000,
+    lineHeight: 1,
+  }
 
   return (
     <div
@@ -23,18 +43,37 @@ function Lightbox({ src, alt, onClose }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        cursor: 'pointer',
       }}
     >
+      {currentIndex > 0 && (
+        <button
+          onClick={(e) => { e.stopPropagation(); onPrev() }}
+          style={{ ...arrowStyle, left: '0.5rem' }}
+          aria-label="Previous photo"
+        >
+          ‹
+        </button>
+      )}
       <img
-        src={src}
-        alt={alt}
+        src={photo.src}
+        alt={photo.alt}
+        onClick={(e) => e.stopPropagation()}
         style={{
-          maxWidth: '95vw',
+          maxWidth: '85vw',
           maxHeight: '95vh',
           objectFit: 'contain',
+          cursor: 'default',
         }}
       />
+      {currentIndex < allPhotos.length - 1 && (
+        <button
+          onClick={(e) => { e.stopPropagation(); onNext() }}
+          style={{ ...arrowStyle, right: '0.5rem' }}
+          aria-label="Next photo"
+        >
+          ›
+        </button>
+      )}
     </div>
   )
 }
@@ -179,13 +218,38 @@ function Gallery({ photoList, onImageClick }) {
 
 /* ───────── main app ───────── */
 export default function App() {
-  const [lightboxPhoto, setLightboxPhoto] = useState(null)
-  const closeLightbox = useCallback(() => setLightboxPhoto(null), [])
+  const [lightboxIndex, setLightboxIndex] = useState(-1)
   const appleMapsUrl = "https://maps.apple.com/place?address=484%20Union%20St,%20San%20Francisco,%20CA%20%2094133,%20United%20States&coordinate=37.800784,-122.407413&name=Frenzy%20Faire&place-id=I2A466D0813820E2D&map=explore"
+
+  // Build flat list of all tappable photos in page order
+  const featuredTrioPhotos = [
+    { src: '/photos/flower-mug.jpg', alt: 'Handcrafted flower mug' },
+    { src: '/photos/interior-1.jpg', alt: 'Frenzy Faire interior' },
+    { src: '/photos/mid-century-art-prints.jpg', alt: 'Mid century modern art prints' },
+  ]
+  const galleryPhotos = photos.filter(p => !featuredSrcs.has(p.src))
+  const allTappable = useMemo(() => [...featuredTrioPhotos, ...galleryPhotos, ...openingPartyPhotos], [])
+
+  const openLightbox = useCallback((photo) => {
+    const idx = allTappable.findIndex(p => p.src === photo.src)
+    setLightboxIndex(idx >= 0 ? idx : 0)
+  }, [allTappable])
+
+  const closeLightbox = useCallback(() => setLightboxIndex(-1), [])
+  const prevPhoto = useCallback(() => setLightboxIndex(i => Math.max(0, i - 1)), [])
+  const nextPhoto = useCallback(() => setLightboxIndex(i => Math.min(allTappable.length - 1, i + 1)), [allTappable])
 
   return (
     <div>
-      {lightboxPhoto && <Lightbox src={lightboxPhoto.src} alt={lightboxPhoto.alt} onClose={closeLightbox} />}
+      {lightboxIndex >= 0 && (
+        <Lightbox
+          allPhotos={allTappable}
+          currentIndex={lightboxIndex}
+          onClose={closeLightbox}
+          onPrev={prevPhoto}
+          onNext={nextPhoto}
+        />
+      )}
 
       {/* Hero — storefront background */}
       <section
@@ -318,13 +382,13 @@ export default function App() {
       <section className="pb-0">
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '6px' }}>
-            <div className="gallery-img" onClick={() => setLightboxPhoto({ src: '/photos/flower-mug.jpg', alt: 'Handcrafted flower mug' })} style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden', cursor: 'pointer' }}>
+            <div className="gallery-img" onClick={() => openLightbox({ src: '/photos/flower-mug.jpg', alt: 'Handcrafted flower mug' })} style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden', cursor: 'pointer' }}>
               <img src="/photos/flower-mug.jpg" alt="Handcrafted flower mug" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
-            <div className="gallery-img" onClick={() => setLightboxPhoto({ src: '/photos/interior-1.jpg', alt: 'Frenzy Faire interior' })} style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden', cursor: 'pointer' }}>
+            <div className="gallery-img" onClick={() => openLightbox({ src: '/photos/interior-1.jpg', alt: 'Frenzy Faire interior' })} style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden', cursor: 'pointer' }}>
               <img src="/photos/interior-1.jpg" alt="Frenzy Faire interior" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
-            <div className="gallery-img" onClick={() => setLightboxPhoto({ src: '/photos/mid-century-art-prints.jpg', alt: 'Mid century modern art prints' })} style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden', cursor: 'pointer' }}>
+            <div className="gallery-img" onClick={() => openLightbox({ src: '/photos/mid-century-art-prints.jpg', alt: 'Mid century modern art prints' })} style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden', cursor: 'pointer' }}>
               <img src="/photos/mid-century-art-prints.jpg" alt="Mid century modern art prints" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
           </div>
@@ -354,7 +418,7 @@ export default function App() {
       {/* Main Gallery */}
       <section className="pb-0">
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
-          <Gallery photoList={photos.filter(p => !featuredSrcs.has(p.src))} onImageClick={setLightboxPhoto} />
+          <Gallery photoList={photos.filter(p => !featuredSrcs.has(p.src))} onImageClick={openLightbox} />
         </div>
       </section>
 
@@ -381,7 +445,7 @@ export default function App() {
       {/* Opening Party */}
       <section className="pb-0">
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
-          <Gallery photoList={openingPartyPhotos} onImageClick={setLightboxPhoto} />
+          <Gallery photoList={openingPartyPhotos} onImageClick={openLightbox} />
         </div>
       </section>
 
