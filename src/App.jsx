@@ -195,20 +195,27 @@ function Gallery({ photoList, onImageClick }) {
     columns[shortest].height += p.h / p.w
   })
 
-  // Find the tallest column and align all columns to the bottom
-  const maxHeight = Math.max(...columns.map(c => c.height))
-
   return (
-    <div style={{ display: 'flex', gap: `${GAP}px`, alignItems: 'flex-end' }}>
+    <div style={{ display: 'flex', gap: `${GAP}px`, alignItems: 'stretch' }}>
       {columns.map((col, ci) => (
         <div key={ci} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: `${GAP}px` }}>
           {col.photos.map((p, pi) => (
-            <div key={pi} onClick={() => onImageClick && onImageClick(p)} style={{ cursor: 'pointer' }}>
-              <LazyImage
+            <div
+              key={pi}
+              onClick={() => onImageClick && onImageClick(p)}
+              style={{
+                cursor: 'pointer',
+                flex: `${p.h / p.w} 1 0%`,
+                overflow: 'hidden',
+                minHeight: 0,
+              }}
+            >
+              <img
                 src={p.src}
                 alt={p.alt}
+                loading="lazy"
                 className="gallery-img"
-                style={{ width: '100%', aspectRatio: `${p.w}/${p.h}` }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
               />
             </div>
           ))}
