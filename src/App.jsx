@@ -292,7 +292,7 @@ export default function App() {
       </section>
 
       {/* Gift Card button */}
-      <section className="py-20 md:py-28">
+      <section className="py-10 md:py-14">
         <div className="max-w-2xl mx-auto px-6 md:px-8 text-center flex items-center justify-center" style={{ minHeight: '8rem' }}>
           <a
             href="https://app.squareup.com/gift/MLJZ93FYMD68M/order"
