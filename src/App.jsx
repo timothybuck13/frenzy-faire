@@ -345,7 +345,7 @@ export default function App() {
             Frenzy Faire offers{' '}
             <a href="https://www.instagram.com/alyssamarieguerrero/" target="_blank" rel="noopener noreferrer" className="text-black underline">
               Alyssa Guerrero
-            </a>'s handcrafted ceramics and jewelry, alongside her curated vintage home goods and clothing from around the world. This special North Beach shop is born of a love for texture, color, pattern, and the tactile process of creating by hand.
+            </a>'s handcrafted ceramics and jewelry, alongside her curated vintage home goods and clothing from around the world. This special North Beach shop is born of Alyssa's love of texture, color, pattern, and the tactile process of creating by hand.
           </p>
           <a
             href="https://www.instagram.com/frenzyfaire/"
