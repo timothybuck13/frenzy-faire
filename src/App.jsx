@@ -312,7 +312,7 @@ export default function App() {
       </section>
 
       {/* Main Gallery */}
-      <section className="pb-20 md:pb-28">
+      <section className="pb-0">
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
           <Gallery photoList={photos.filter(p => !featuredSrcs.has(p.src))} />
         </div>
