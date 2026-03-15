@@ -275,7 +275,7 @@ export default function App() {
       </section>
 
       {/* Featured trio */}
-      <section className="pb-8 md:pb-12">
+      <section className="pb-0">
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '6px' }}>
             <div className="gallery-img" style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden' }}>
